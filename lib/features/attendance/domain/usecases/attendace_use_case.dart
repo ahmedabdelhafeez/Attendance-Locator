@@ -21,7 +21,10 @@ class AttendaceUseCase{
   Future<Either<DioException, AttendanceEntity>> postLatAndLongDeparture(Map<String, dynamic> data) async{
     return await  attendaceRepo.postLatAndLongDeparture(data);
   }
-    Future<Either<DioException, TodayAttendanceEntity>> getTodayAttendacneEmployee(Map<String, dynamic> data) async{
-    return await  attendaceRepo.getTodayAttendacneEmployee(data);
+    Future<Either<DioException, List< TodayAttendanceEntity>>> getTodayAttendacneEmployee(String id) async{
+    return await  attendaceRepo.getTodayAttendacneEmployee(id);
+  }
+    Future<Either<DioException,List <TodayAttendanceEntity>>> getMonthlyAttendce(String month,String year) async{
+    return await  attendaceRepo.getMonthlyAttendce(month,year);
   }
  }

@@ -47,6 +47,8 @@ class Images {
   static const String checkOut = "assets/images/home_image_icons/checkOut.png";
   static const String overTime = "assets/images/home_image_icons/overTime.png";
   static const String personn = "assets/images/home_image_icons/personn.png";
+  static const String eslam = "assets/images/home_image_icons/eslam.png";
+  static const String eslamLogo = "assets/images/home_image_icons/eslamLogo.png";
 //----------------------------------- (categories_images_icons)-------------------------------------//
   static const String clothesIcon = "assets/images/categories_image_icons/clothesIcon.svg";
   static const String sofaIcon = "assets/images/categories_image_icons/sofaIcon.svg";

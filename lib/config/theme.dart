@@ -63,9 +63,9 @@ TabBarTheme tabBarTheme = const TabBarTheme(
 
 SystemUiOverlayStyle barColor(){
   if(Platform.isAndroid){
-    return const SystemUiOverlayStyle(
+    return  SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
-        statusBarColor: Colors.white,
+        statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white
     );

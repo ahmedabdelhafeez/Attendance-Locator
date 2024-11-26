@@ -11,6 +11,7 @@ import 'package:attendance_and_departure/features/auth/domain/usecases/user_usec
 import 'package:attendance_and_departure/features/auth/presentation/pages/law_page.dart';
 import 'package:attendance_and_departure/features/auth/presentation/pages/register_page.dart';
 import 'package:attendance_and_departure/features/attendance/presentation/provider/location_provider.dart';
+import 'package:attendance_and_departure/features/report/presentation/provider/report_provider.dart';
 import 'package:attendance_and_departure/features/splash_screen/presentation/widgets/back_widget.dart';
 import 'package:attendance_and_departure/features/splash_screen/presentation/widgets/next_button_widget.dart';
 import 'package:attendance_and_departure/core/constants/constants.dart';
@@ -34,9 +35,10 @@ import 'package:sizer/sizer.dart';
 import '../../../language/presentation/provider/language_provider.dart';
 
 class AuthProvider extends ChangeNotifier {
-   String dayTime = DateFormat('d MMMM y', 'ar').format(DateTime.now());
+  String dayTime = DateFormat('d MMMM y', 'ar').format(DateTime.now());
   UserEntity? userEntity;
-  String ? userName;
+  String? userId;
+  String? userName;
   DateTime lastLogin = DateTime.now();
   bool fromAuthRegister = true;
   bool obscureText = true;
@@ -473,14 +475,14 @@ class AuthProvider extends ChangeNotifier {
   //     // var response = await dio.post('/refresh-token', data: {'refreshToken': refreshToken});
   //     // Handle response and update tokens
   //   } catch (e) {
-  //     // Handle error, log out user, etc.
+  //     // Handle error, log out user, etc.macAddress
   //   }
   // }
 
   Future loginButton({bool fromSplash = false, bool fromJWT = false}) async {
     //token = await FirebaseMessaging.instance.getToken() ?? "123";
     Map<String, dynamic> data = {};
-    // data['token'] = token;
+    data['macAddress'] = macAddress;
     if (fromSplash) {
       loginInputs.firstWhere((element) => element.key == 'userName').controller =
           TextEditingController(text: CashMemmory.sharedPreferences.getString("userName"));
@@ -511,8 +513,8 @@ class AuthProvider extends ChangeNotifier {
         //  showToast(l.response!.data['message']);
       }
     }, (r) async {
-   
       print("-------------------->" + r.toString());
+
       successLogin(userEntity: r, password: data['password'], fromJWT: fromJWT, nationalId: data['userName']);
       notifyListeners();
       //   AccessTokenFireBase accessTokenGetter = AccessTokenFireBase();
@@ -523,19 +525,23 @@ class AuthProvider extends ChangeNotifier {
 
   void successLogin({required UserEntity userEntity, String? password, String? nationalId, bool fromJWT = false}) async {
     print('success');
-    lastLogin = DateTime.now();
     CashMemmory.sharedPreferences.setBool('login', true);
     CashMemmory.sharedPreferences.setString('userToken', userEntity.token!);
     CashMemmory.sharedPreferences.setString('userName', userEntity.name!);
+    userId = userEntity.userId.toString();
+    CashMemmory.sharedPreferences.setString('UserId', userId!);
     this.userEntity = userEntity;
     ApiHandle.getInstance.updateHeader(userEntity.token!);
     if (!fromJWT) {
       print('success');
       await delay(100);
+      Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).getEmployeeHome(userEntity.userId.toString());
+      Provider.of<ReportProvider>(Constants.globalContext(),listen: false).getEmployeeReport(userEntity.userId.toString());
       Provider.of<LanguageProvider>(Constants.globalContext(), listen: false).rebuild();
       Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).goToLoactionHome();
-      print("--------------------00000000-----------------------\n");
+      print("--------------------00000000--------  $userId---------------\n");
     }
+    // await Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).getTodayAttendacneEmployee(userId.toString());
     notifyListeners();
   }
 
@@ -576,7 +582,7 @@ class AuthProvider extends ChangeNotifier {
     print("----------------------- >" + data.toString());
     Either<DioException, UserEntity> login = await UserUseCases(sl()).register(data);
     login.fold((l) {
-    if (!isRgister) navPop();
+      if (!isRgister) navPop();
       confirmDialog(
         l.response!.data["message"],
         'الغاء',
@@ -586,12 +592,8 @@ class AuthProvider extends ChangeNotifier {
           notifyListeners();
         },
       );
-
     }, (r) async {
-      print("khaled zaki" + r.toString());
-      Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).mylocation=null;
-      // Provider.of<AttendanceProvider>(Constants.globalContext(),listen: false).toggeleState=false;
-      // CashMemmory.sharedPreferences.setBool('toggeleState', Provider.of<AttendanceProvider>(Constants.globalContext(),listen: false).toggeleState!);
+      Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).mylocation = null;
       successLogin(userEntity: r, password: data['password'], nationalId: data['userName']);
     });
   }
@@ -600,7 +602,7 @@ class AuthProvider extends ChangeNotifier {
   //   Map<String, dynamic> data = {};
   //   // data['token'] = "123";
   //   token = await FirebaseMessaging.instance.getToken() ?? "123";
-  
+
   //   // AccessTokenFireBase accessTokenGetter = AccessTokenFireBase();
   //   // String token = await accessTokenGetter.getAccessToken();
   //   data['token'] = token;
@@ -640,62 +642,62 @@ class AuthProvider extends ChangeNotifier {
   void goToLoginPage() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // prefs.setBool('intro', true);
-  loginInputs = [
-    TextFieldModel(
-      borderColor: Colors.grey,
-      borderRadius: 4.w,
-      gradientColor: AppColor.defaultgredint,
-      key: "userName",
-      fillColor: Colors.white30,
-      titleWidgetColor: Colors.black,
-      image: Images.copyIcon,
-      validator: (val) {
-        if (val!.length != 14) {
-          return "يجب أن لا يقل او يذيد الرقم القومي  عن 14 أحرف";
-        }
-        if (!RegExp(r'^\d+$').hasMatch(val)) {
-          return "يجب أن يحتوي  الرقم القومي على أرقام فقط";
-        }
-      },
-      labelStyle: TextStyleClass.semiStyle(color: Colors.black),
-      controller: TextEditingController(),
-      label: "الرقم القومي",
-      textInputType: TextInputType.phone,
-      hint: "مثال : 3000905218535483",
-      next: true,
-    ),
-    TextFieldModel(
-      borderColor: Colors.grey,
-      key: "password",
-      borderRadius: 4.w,
-      fillColor: Colors.white30,
-      titleWidgetColor: Colors.black,
-      image: Images.lockPassIcon,
-      isPassword: true,
-      validator: (val) {
-        if (val!.length < 8) {
-          return "يجب أن لا تقل كلمة المرور عن 8 أحرف";
-        }
-        if (!RegExp(r'[a-z]').hasMatch(val)) {
-          return "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل";
-        }
-        if (!RegExp(r'[A-Z]').hasMatch(val)) {
-          return "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل";
-        }
-        if (!RegExp(r'\d').hasMatch(val)) {
-          return "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل";
-        }
-        if (!RegExp(r'[\W_]').hasMatch(val)) {
-          return "يجب أن تحتوي كلمة المرور على علامة مميزة واحدة على الأقل (مثل @، #، !)";
-        }
-      },
-      labelStyle: TextStyleClass.semiStyle(color: Colors.black),
-      controller: TextEditingController(),
-      label: "pass",
-      hint: "************",
-      next: true,
-    )
-  ];
+    loginInputs = [
+      TextFieldModel(
+        borderColor: Colors.grey,
+        borderRadius: 4.w,
+        gradientColor: AppColor.defaultgredint,
+        key: "userName",
+        fillColor: Colors.white30,
+        titleWidgetColor: Colors.black,
+        image: Images.copyIcon,
+        validator: (val) {
+          if (val!.length != 14) {
+            return "يجب أن لا يقل او يذيد الرقم القومي  عن 14 أحرف";
+          }
+          if (!RegExp(r'^\d+$').hasMatch(val)) {
+            return "يجب أن يحتوي  الرقم القومي على أرقام فقط";
+          }
+        },
+        labelStyle: TextStyleClass.semiStyle(color: Colors.black),
+        controller: TextEditingController(),
+        label: "الرقم القومي",
+        textInputType: TextInputType.phone,
+        hint: "مثال : 3000905218535483",
+        next: true,
+      ),
+      TextFieldModel(
+        borderColor: Colors.grey,
+        key: "password",
+        borderRadius: 4.w,
+        fillColor: Colors.white30,
+        titleWidgetColor: Colors.black,
+        image: Images.lockPassIcon,
+        isPassword: true,
+        validator: (val) {
+          if (val!.length < 8) {
+            return "يجب أن لا تقل كلمة المرور عن 8 أحرف";
+          }
+          if (!RegExp(r'[a-z]').hasMatch(val)) {
+            return "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل";
+          }
+          if (!RegExp(r'[A-Z]').hasMatch(val)) {
+            return "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل";
+          }
+          if (!RegExp(r'\d').hasMatch(val)) {
+            return "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل";
+          }
+          if (!RegExp(r'[\W_]').hasMatch(val)) {
+            return "يجب أن تحتوي كلمة المرور على علامة مميزة واحدة على الأقل (مثل @، #، !)";
+          }
+        },
+        labelStyle: TextStyleClass.semiStyle(color: Colors.black),
+        controller: TextEditingController(),
+        label: "pass",
+        hint: "************",
+        next: true,
+      )
+    ];
 
     navPARU(LoginPage());
   }

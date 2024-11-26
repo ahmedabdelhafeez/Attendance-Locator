@@ -48,11 +48,11 @@ class ApiHandle {
     cancelToken.cancel();
   }
 
-  void updateHeader(String token, {String? language}) {
+  void updateHeader(String token, {String? language}) async{
     if (language != null) {
       lang = language;
     }
-    dio.options = BaseOptions(
+    dio.options = await BaseOptions(
       baseUrl: Constants.baseUri,
       headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'},
     );
@@ -96,7 +96,6 @@ class ApiHandle {
       }
       return Left(dioException(response));
     } on DioException catch (e) {
-      debugPrint(e.response!.data['detail']);
       debugPrint(e.message);
       print("dioException ON $path");
       return Left(e);

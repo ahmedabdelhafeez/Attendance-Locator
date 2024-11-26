@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
-int? userId;
+final int? userId;
 String? name;  
 String? token;  
 String? nationalId;
@@ -10,7 +10,7 @@ String? macAddress;
 UserEntity({
  this.nationalId,
  this.password,
- this.userId,
+required this.userId,
  this.name,
  this.macAddress,
  this.token

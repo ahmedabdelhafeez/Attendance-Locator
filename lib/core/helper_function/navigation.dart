@@ -6,7 +6,8 @@ import '../constants/constants.dart';
 
 void navP(className, {void Function(dynamic val)? then}){
   // PageTransitionType type = PageTransitionType.fade,
-  Navigator.push(Constants.globalContext(), MaterialPageRoute(builder: (context)=>className)).then((value) {
+  Navigator.push(Constants.globalContext(),
+   MaterialPageRoute(builder: (context)=>className)).then((value) {
     if(then!=null){
       then(value);
     }

@@ -2,6 +2,38 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to provide location-based features.</string>
+<!-- Permission options for the `camera` group -->
+    <key>NSCameraUsageDescription</key>
+    <string>camera</string>
+    <!-- Permission options for the `microphone` group -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>microphone</string>
+    <!-- Permission options for the `photos` group -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>photos</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need your location to run in the background and provide continuous location updates.</string>
+
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>We need your location to provide location-based features even in the background.</string>
+
+<key>NSFaceIDUsageDescription</key>
+<string>We need Face ID to securely authenticate your identity.</string>
+
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>We need access to Bluetooth to detect nearby devices.</string>
+
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>We need access to Bluetooth to communicate with nearby peripherals.</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need access to your photo library to save and upload images.</string>
+
+<key>NSCameraUsageDescription</key>
+<string>We need access to your camera for capturing photos and videos.</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -13,7 +45,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>attendance_and_departure</string>
+	<string>Elsalam</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

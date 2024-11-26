@@ -5,7 +5,7 @@ import 'package:attendance_and_departure/features/auth/presentation/provider/res
 import 'package:attendance_and_departure/features/home/presentation/provider/home_provider.dart';
 import 'package:attendance_and_departure/features/language/domain/entities/app_localizations.dart';
 import 'package:attendance_and_departure/features/language/presentation/provider/language_provider.dart';
-import 'package:attendance_and_departure/features/setting/presentation/provider/user_profile_provider.dart';
+import 'package:attendance_and_departure/features/report/presentation/provider/report_provider.dart';
 import 'package:attendance_and_departure/features/splash_screen/presentation/pages/splash_page.dart';
 import 'package:attendance_and_departure/features/splash_screen/presentation/provider/splash_provider.dart';
 import 'package:attendance_and_departure/injection_container.dart';
@@ -45,13 +45,11 @@ void main() async {
   // await notificationsFirebase();
   // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   // await NotificationLocalClass.init();
-
   LanguageProvider language = LanguageProvider();
   language.fetchLocale();
   await initializeDependencies();
   await CashMemmory.startSharedPref();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [SystemUiOverlay.bottom]);
   await ApiHandle.getInstance.init();
   runApp(MyApp(
     language: language,
@@ -77,10 +75,10 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider(create: (_) => AuthProvider()),
               ChangeNotifierProvider(create: (_) => OtpProvider()),
               ChangeNotifierProvider(create: (_) => HomeProvider()),
-              ChangeNotifierProvider(create: (_) => UserProfileProvider()),
               ChangeNotifierProvider(create: (_) => ResetPassProvider()),
               ChangeNotifierProvider(create: (_) => SplashProvider()),
               ChangeNotifierProvider(create: (_) => AttendanceProvider()),
+              ChangeNotifierProvider(create: (_) => ReportProvider()),
             ],
             child: ChangeNotifierProvider<LanguageProvider>(
                 create: (_) => language,
@@ -99,7 +97,8 @@ class MyApp extends StatelessWidget {
                                 data: defaultTheme.copyWith(),
                                 child: Container(
                                     color: Colors.white,
-                                    child: SafeArea(bottom: true, child: SizedBox(width: 100.w, height: 100.h, child: Stack(children: [child!])))));
+                                    child: SafeArea(
+                                        top: false, bottom: true, child: SizedBox(width: 100.w, height: 100.h, child: Stack(children: [child!])))));
                           },
                           localizationsDelegates: [
                             CountryLocalizations.delegate,

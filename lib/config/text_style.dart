@@ -34,11 +34,12 @@ class TextStyleClass {
     );
   }
 
-  static TextStyle headBoldStyle({Color? color, double? fontSize}) {
+  static TextStyle headBoldStyle({List<Shadow>?shadow ,Color? color, double? fontSize}) {
     return GoogleFonts.cairo(
       color: color ?? null,
       fontSize: fontSize ?? 16.sp,
       height: 1.3,
+      shadows:shadow,
       fontWeight: FontWeight.bold,
     );
   }
@@ -93,11 +94,12 @@ class TextStyleClass {
     );
   }
 
-  static TextStyle semiBoldStyle({Color? color}) {
+  static TextStyle semiBoldStyle({List<Shadow>?shadow, Color? color}) {
     return GoogleFonts.cairo(
       color: color ?? null,
       fontSize: 13.sp,
       height: 1.3,
+      shadows:shadow ,
       fontWeight: FontWeight.bold,
     );
   }

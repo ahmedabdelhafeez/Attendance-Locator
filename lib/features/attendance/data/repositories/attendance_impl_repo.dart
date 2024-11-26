@@ -7,16 +7,22 @@ import 'package:dio/src/dio_exception.dart';
 
 class AttendanceImplRepo implements AttendaceRepo {
   @override
-  Future<Either<DioException, AttendanceEntity>> postLatAndLongAttendance(Map<String, dynamic> data)async {
-return AttendanceRemoteDataSource.postLatAndLongAttendance(data);
+  Future<Either<DioException, AttendanceEntity>> postLatAndLongAttendance(Map<String, dynamic> data) async {
+    return AttendanceRemoteDataSource.postLatAndLongAttendance(data);
   }
 
   @override
-  Future<Either<DioException, AttendanceEntity>> postLatAndLongDeparture(Map<String, dynamic> data) async{
-return AttendanceRemoteDataSource.postLatAndLongDeparture(data);
+  Future<Either<DioException, AttendanceEntity>> postLatAndLongDeparture(Map<String, dynamic> data) async {
+    return AttendanceRemoteDataSource.postLatAndLongDeparture(data);
   }
+
   @override
-  Future<Either<DioException, TodayAttendanceEntity>> getTodayAttendacneEmployee(Map<String, dynamic> data) async{
-return AttendanceRemoteDataSource.getTodayAttendacneEmployee(data);
+  Future<Either<DioException, List <TodayAttendanceEntity>>> getTodayAttendacneEmployee(String id) async {
+    return AttendanceRemoteDataSource.getTodayAttendacneEmployee(id);
+  }
+
+  @override
+  Future<Either<DioException, List <TodayAttendanceEntity>>> getMonthlyAttendce(String month, String year) async {
+    return AttendanceRemoteDataSource.getMonthlyAttendce(month, year);
   }
 }

@@ -1,16 +1,20 @@
+import 'package:attendance_and_departure/config/app_color.dart';
+import 'package:attendance_and_departure/config/text_style.dart';
 import 'package:attendance_and_departure/core/constants/constants.dart';
+import 'package:attendance_and_departure/core/constants/images.dart';
 import 'package:attendance_and_departure/core/dialog/confirm_dialog.dart';
 import 'package:attendance_and_departure/core/dialog/snack_bar.dart';
 import 'package:attendance_and_departure/core/helper_function/convert.dart';
 import 'package:attendance_and_departure/core/helper_function/loading.dart';
 import 'package:attendance_and_departure/core/helper_function/navigation.dart';
 import 'package:attendance_and_departure/core/helper_function/prefs.dart';
+import 'package:attendance_and_departure/core/models/text_field_model.dart';
 import 'package:attendance_and_departure/features/attendance/domain/entities/attendance_entity.dart';
 import 'package:attendance_and_departure/features/attendance/domain/entities/today_attendance_entity.dart';
 import 'package:attendance_and_departure/features/attendance/domain/usecases/attendace_use_case.dart';
-import 'package:attendance_and_departure/features/attendance/presentation/pages/loacation_page.dart';
 import 'package:attendance_and_departure/features/auth/presentation/provider/auth_provider.dart';
 import 'package:attendance_and_departure/features/home/presentation/pages/home_page.dart';
+import 'package:attendance_and_departure/features/report/presentation/provider/report_provider.dart';
 import 'package:attendance_and_departure/injection_container.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
@@ -18,14 +22,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class AttendanceProvider extends ChangeNotifier {
   String? attendanceTime;
   String? dependanceTime;
   String? attendeceLocation;
+  List<TodayAttendanceEntity>? listTodayAttendaceModel;
   String? dependancelocation;
   bool attendace = false;
   bool depeture = false;
+  bool isMotorcycleVisible = false;
+  bool hodor = false;
   bool _isAnimating = false;
   bool iSloading = false;
   Position? position;
@@ -34,8 +42,9 @@ class AttendanceProvider extends ChangeNotifier {
   AttendanceEntity? attendanceEntity;
   AttendanceEntity? dePetureEntity;
   TodayAttendanceEntity? todayEntity;
+  List<TodayAttendanceEntity>? monthlyAttendce;
   double? long;
-  List<LastFiveDaysEntity>listLastFiveDaysEntity=[];
+  List<TodayAttendanceEntity> listLastSixDaysEntity = [];
   bool get isAnimating => _isAnimating;
   void startAnimation() {
     _isAnimating = true;
@@ -53,6 +62,11 @@ class AttendanceProvider extends ChangeNotifier {
   //   CashMemmory.sharedPreferences.setBool('toggeleState', toggeleState!);
   //   notifyListeners();
   // }
+  void carToggle() {
+    isMotorcycleVisible = true;
+    print(isMotorcycleVisible.toString());
+    notifyListeners();
+  }
 
   Future<void> getCurrentLocation(int check) async {
     bool serviceEnabled;
@@ -69,7 +83,7 @@ class AttendanceProvider extends ChangeNotifier {
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         // Show a toast if location services are disabled
-        showToast("عليك تفعيل خيار تحديد المواقع");
+        showToast("عليك تفعيل خيار تحديد المواقع", color: Colors.red);
         return;
       }
 
@@ -97,36 +111,11 @@ class AttendanceProvider extends ChangeNotifier {
       position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       lat = position!.latitude;
       long = position!.longitude;
-      print(lat);
-      print(long);
-      print(check);
       if (check == 0) {
         postLatAndLongAttendance();
-        // confirmDialog(
-        //     'هل انت متاكد من تسجيل الحضور',
-        //     'تاكيد',
-        //     () {
-        //       postLatAndLongAttendance();
-        //       navPop();
-        //     },
-        //     cancel: 'الغاء',
-        //     cancelTap: () {
-        //       navPop();
-        //     });
       }
       if (check == 1) {
         postLatAndLongDeparture();
-        // confirmDialog(
-        //     'هل انت متاكد من تسجيل الانصراف',
-        //     'تاكيد',
-        //     () {
-        //       postLatAndLongDeparture();
-        //       navPop();
-        //     },
-        //     cancel: 'الغاء',
-        //     cancelTap: () {
-        //       navPop();
-        //     });
       }
       notifyListeners();
     } catch (e) {
@@ -144,13 +133,15 @@ class AttendanceProvider extends ChangeNotifier {
   }
 
   void goToLoactionHome() {
-    attendace = CashMemmory.getData(key: 'attendace') ?? false;
-    depeture = CashMemmory.getData(key: 'depeture') ?? false;
-    dependancelocation = CashMemmory.getData(key: 'dependancelocation') ?? 'المكان لم يحدد بعد';
-    attendeceLocation = CashMemmory.getData(key: 'attendeceLocation') ?? 'المكان لم يحدد بعد';
+    // attendace = CashMemmory.getData(key: 'attendace') ?? false;
+    // depeture = CashMemmory.getData(key: 'depeture') ?? false;
+    // dependancelocation = CashMemmory.getData(key: 'dependancelocation') ?? 'المكان لم يحدد بعد';
+    // attendeceLocation = CashMemmory.getData(key: 'attendeceLocation') ?? 'المكان لم يحدد بعد';
     Provider.of<AuthProvider>(Constants.globalContext(), listen: false).userName = CashMemmory.getData(key: 'userName');
-    attendanceTime = CashMemmory.getData(key: 'attendanceTime');
-    dependanceTime = CashMemmory.getData(key: 'dependanceTime');
+    // attendanceTime = CashMemmory.getData(key: 'attendanceTime');
+    // dependanceTime = CashMemmory.getData(key: 'dependanceTime');
+    // print('/************/**/*/*/*/' + CashMemmory.getData(key: 'UserId'));
+
     navPARU(HomePage());
     notifyListeners();
   }
@@ -172,7 +163,8 @@ class AttendanceProvider extends ChangeNotifier {
         },
       );
     }, (r) async {
-      getTodayAttendacneEmployee(r.token.toString());
+      getEmployeeHome(CashMemmory.getData(key: 'UserId'));
+      Provider.of<ReportProvider>(Constants.globalContext(), listen: false).getEmployeeReport(CashMemmory.getData(key: 'UserId'));
       attendanceEntity = r;
       attendeceLocation = attendanceEntity!.location;
       print(mylocation);
@@ -182,6 +174,7 @@ class AttendanceProvider extends ChangeNotifier {
       attendace = !attendace;
       CashMemmory.sharedPreferences.setBool('attendace', attendace);
       showToast('تم سجيل الحضور لهذا اليوم');
+
       notifyListeners();
     });
   }
@@ -203,26 +196,99 @@ class AttendanceProvider extends ChangeNotifier {
         },
       );
     }, (r) async {
-      getTodayAttendacneEmployee(r.token.toString());
+      getEmployeeHome(CashMemmory.getData(key: 'UserId'));
+      Provider.of<ReportProvider>(Constants.globalContext(), listen: false).getEmployeeReport(CashMemmory.getData(key: 'UserId'));
       dependanceTime = convertDateTimeToString(DateTime.now());
       CashMemmory.sharedPreferences.setString('time', dependanceTime!);
       dePetureEntity = r;
       dependancelocation = dePetureEntity!.location;
       print(dependancelocation);
-      CashMemmory.sharedPreferences.setString('attendanceTime', attendanceTime!);
-      CashMemmory.sharedPreferences.setString('dependancelocation', dePetureEntity!.location!);
-      depeture = !depeture;
-      CashMemmory.sharedPreferences.setBool('depeture', depeture);
+      isMotorcycleVisible = !isMotorcycleVisible;
       showToast('تم التسجيل الانصراف');
       notifyListeners();
     });
   }
 
-  Future getTodayAttendacneEmployee(String token) async {
-    //token = await FirebaseMessaging.instance.getToken() ?? "123";
-    Map<String, dynamic> data = {};
-    data['token'] = token;
-    Either<DioException, TodayAttendanceEntity> postAttendance = await AttendaceUseCase(sl()).getTodayAttendacneEmployee(data);
+  Future getEmployeeHome(String id) async {
+    Either<DioException, List<TodayAttendanceEntity>> postAttendance = await AttendaceUseCase(sl()).getTodayAttendacneEmployee(id);
+    postAttendance.fold((l) {
+      confirmDialog(
+        l.response!.data["message"],
+        'حسناً',
+        () {
+          navPop();
+          notifyListeners();
+        },
+      );
+    }, (r) async {
+      listTodayAttendaceModel = r;
+      listLastSixDaysEntity = r;
+
+      print('-----------khale---------------->' + r.toString());
+      // listLastFiveDaysEntity = todayEntity!.lastFiveDays;
+      // print("************************************" + r.toString());
+      // print("************************************" + r.lastFiveDays.toString());
+      notifyListeners();
+    });
+  }
+
+  List<TextFieldModel> selectPeroid = [
+    TextFieldModel(
+      borderColor: Colors.grey,
+      borderRadius: 4.w,
+      gradientColor: AppColor.defaultgredint,
+      key: "year",
+      fillColor: Colors.white30,
+      titleWidgetColor: Colors.black,
+      image: Images.dateIcon,
+      labelStyle: TextStyleClass.semiStyle(color: Colors.black),
+      controller: TextEditingController(),
+      label: "السنة",
+      validator: (val) {
+        if (val!.length != 4) {
+          return "يجب أن لا يقل او يذيد رقم السنة  عن 4 أحرف";
+        }
+        if (!RegExp(r'^\d+$').hasMatch(val)) {
+          return "يجب أن يحتوي  النص علي  أرقام فقط";
+        }
+      },
+      textInputType: TextInputType.phone,
+      hint: "مثال : 2024",
+      next: true,
+    ),
+    TextFieldModel(
+      borderColor: Colors.grey,
+      borderRadius: 4.w,
+      gradientColor: AppColor.defaultgredint,
+      key: "month",
+      fillColor: Colors.white30,
+      titleWidgetColor: Colors.black,
+      image: Images.dateIcon,
+      labelStyle: TextStyleClass.semiStyle(color: Colors.black),
+      controller: TextEditingController(),
+      label: "الشهر",
+      validator: (val) {
+        if (val!.length > 2) {
+          return "يجب أن لا يقل او يذيد رقم الشهر  عن 2 أحرف";
+        }
+        if (!RegExp(r'^\d+$').hasMatch(val)) {
+          return "يجب أن يحتوي  النص علي  أرقام فقط";
+        }
+        if (val == '0' || int.parse(val) > 12) {
+          return "ادخال الارقام فقد من 1 الي 12";
+        }
+      },
+      textInputType: TextInputType.phone,
+      hint: "مثال : 10",
+      next: true,
+    ),
+  ];
+  String? month;
+  String? year;
+  Future getMonthlyAttendce() async {
+    year = selectPeroid.firstWhere((element) => element.key == 'year').controller.text;
+    month = selectPeroid.firstWhere((element) => element.key == 'month').controller.text;
+    Either<DioException, List<TodayAttendanceEntity>> postAttendance = await AttendaceUseCase(sl()).getMonthlyAttendce(month!, year!);
     postAttendance.fold((l) {
       confirmDialog(
         l.response!.data["message"],
@@ -233,11 +299,11 @@ class AttendanceProvider extends ChangeNotifier {
         },
       );
     }, (r) async {
-      todayEntity = r;
-      listLastFiveDaysEntity=todayEntity!.lastFiveDays;
-      print("************************************" + r.toString());
-      print("************************************" + r.lastFiveDays.toString());
+      loading();
+      monthlyAttendce = r;
+      print(monthlyAttendce);
       notifyListeners();
+      navPop();
     });
   }
 }

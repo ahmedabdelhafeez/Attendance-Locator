@@ -1,22 +1,15 @@
 import 'package:attendance_and_departure/config/app_color.dart';
-import 'package:attendance_and_departure/core/helper_function/navigation.dart';
-import 'package:attendance_and_departure/core/widget/shimmer_text_widget.dart';
 import 'package:attendance_and_departure/features/attendance/presentation/provider/location_provider.dart';
 import 'package:attendance_and_departure/features/auth/presentation/widgets/hello_title_widget.dart';
 import 'package:attendance_and_departure/features/auth/presentation/widgets/loing_image_widget.dart';
 import 'package:attendance_and_departure/features/language/presentation/provider/language_provider.dart';
-import 'package:attendance_and_departure/features/attendance/presentation/pages/loacation_page.dart';
-
 import 'package:flutter/material.dart';
 import 'package:attendance_and_departure/config/text_style.dart';
 import 'package:attendance_and_departure/core/widget/button_widget.dart';
 import 'package:attendance_and_departure/core/widget/list_text_field.dart';
 import 'package:attendance_and_departure/features/auth/presentation/provider/auth_provider.dart';
-import 'package:attendance_and_departure/features/auth/presentation/provider/otp-proivder.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
-
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -41,8 +34,7 @@ class LoginPage extends StatelessWidget {
                       loginImageWidget(),
                       HelloTitleWidget(),
                       SizedBox(height: 1.h),
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.w),
-                      child: ListTextFieldWidget(inputs: auth.loginInputs)),
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 4.w), child: ListTextFieldWidget(inputs: auth.loginInputs)),
                       SizedBox(height: 1.h),
                       // Padding(
                       //     padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -64,11 +56,11 @@ class LoginPage extends StatelessWidget {
                             if (formKey.currentState!.validate()) {
                               auth.loginButton();
                             }
-                            print(Provider.of<AttendanceProvider>(context,listen:false).attendanceEntity);
+                            print(Provider.of<AttendanceProvider>(context, listen: false).attendanceEntity);
                           },
                           text: 'login',
                           textStyle: TextStyleClass.normalStyle(color: Colors.white)),
-                             SizedBox(height: 3.h),
+                      SizedBox(height: 3.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -82,8 +74,8 @@ class LoginPage extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               FocusScope.of(context).unfocus();
-                            
-                               auth.goToRegisterPage();
+
+                              auth.goToRegisterPage();
                             },
                             child: Text(
                               LanguageProvider.translate('login', 'register'),

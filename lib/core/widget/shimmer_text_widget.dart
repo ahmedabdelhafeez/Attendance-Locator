@@ -14,6 +14,7 @@ class ShimmerTextWidget extends StatelessWidget {
       direction: shimmerDirection,
       enabled: enabled,
       gradient: gradient,
+      period: Duration(seconds: 1),
     );
   }
 }

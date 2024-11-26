@@ -5,5 +5,6 @@ import 'package:dio/dio.dart';
 abstract class AttendaceRepo {
   Future<Either<DioException, AttendanceEntity>> postLatAndLongAttendance(Map<String, dynamic> data);
   Future<Either<DioException, AttendanceEntity>> postLatAndLongDeparture(Map<String, dynamic> data);
-  Future<Either<DioException, TodayAttendanceEntity>> getTodayAttendacneEmployee(Map<String, dynamic> data);
+  Future<Either<DioException, List< TodayAttendanceEntity>>> getTodayAttendacneEmployee(String id);
+  Future<Either<DioException, List <TodayAttendanceEntity>>> getMonthlyAttendce(String id,String year);
 }
