@@ -16,67 +16,63 @@ import '../../../../../../config/text_style.dart';
 
 class ProfilePAge extends StatelessWidget {
   ProfilePAge({super.key});
-  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     // UserProfileProvider userProfileProvider = Provider.of(context);
-    return Form(
-      key: formKey,
-      child: Scaffold(
-        appBar: AppBar(
-            toolbarHeight: 5.h,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.w))),
-            backgroundColor: const Color.fromARGB(255, 53, 52, 52),
-            leading: SizedBox.shrink(),
-            title: TextTitleWidget(
-              text: 'الملف الشخصي',
-              color: [Colors.white, Colors.white],
-              textStyle: TextStyleClass.semiBoldStyle(shadow: [
-                Shadow(
-                  offset: Offset(4.0, 4.0), // Position of the shadow
-                  blurRadius: 6.0, // How much the shadow is blurred
-                  color: Colors.white.withOpacity(0.4), // Shadow color
-                ),
-              ]),
-            )),
-        body: Container(
-          width: 100.w,
-          height: 100.h,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(children: [
-              //    SizedBox(height: 10.h),
-              HeaderWidegt(
-                onTap: () {
-                  Navigator.pop(
-                    Constants.globalContext(),
-                    PageTransition(
-                      curve: Curves.easeIn,
-                      duration: Duration(milliseconds: 700),
-                      type: PageTransitionType.topToBottom, // You can change this to different types
-                      child: HomePage(),
-                    ),
-                  );
-                },
+    return Scaffold(
+      appBar: AppBar(
+          toolbarHeight: 5.h,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.w))),
+          backgroundColor: const Color.fromARGB(255, 53, 52, 52),
+          leading: SizedBox.shrink(),
+          title: TextTitleWidget(
+            text: 'الملف الشخصي',
+            color: [Colors.white, Colors.white],
+            textStyle: TextStyleClass.semiBoldStyle(shadow: [
+              Shadow(
+                offset: Offset(4.0, 4.0), // Position of the shadow
+                blurRadius: 6.0, // How much the shadow is blurred
+                color: Colors.white.withOpacity(0.4), // Shadow color
               ),
-              SizedBox(height: 1.h),
-              Provider.of<ReportProvider>(context, listen: true).reportEntity == null
-                  ? Center(
-                      child: Transform.scale(
-                          scale: 2,
-                          child: const CupertinoActivityIndicator(
-                            color: Colors.black,
-                          )))
-                  : Column(
-                      children: <Widget>[
-                        WorkerDetailsWidget(),
-                        WorkTimeWidget(),
-                        SalaryWidget(),
-                        DiscouuntAndAdditionWidget()
-                      ],
-                    )
             ]),
-          ),
+          )),
+      body: Container(
+        width: 100.w,
+        height: 100.h,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(children: [
+            //    SizedBox(height: 10.h),
+            HeaderWidegt(
+              onTap: () {
+                Navigator.pop(
+                  Constants.globalContext(),
+                  PageTransition(
+                    curve: Curves.easeIn,
+                    duration: Duration(milliseconds: 700),
+                    type: PageTransitionType.topToBottom, // You can change this to different types
+                    child: HomePage(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 1.h),
+            Provider.of<ReportProvider>(context, listen: true).reportEntity == null
+                ? Center(
+                    child: Transform.scale(
+                        scale: 2,
+                        child: const CupertinoActivityIndicator(
+                          color: Colors.black,
+                        )))
+                : Column(
+                    children: <Widget>[
+                      WorkerDetailsWidget(),
+                      WorkTimeWidget(),
+                      SalaryWidget(),
+                      DiscouuntAndAdditionWidget()
+                    ],
+                  )
+          ]),
         ),
       ),
     );

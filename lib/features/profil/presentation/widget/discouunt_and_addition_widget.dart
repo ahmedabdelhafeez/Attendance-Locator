@@ -1,4 +1,5 @@
 import 'package:attendance_and_departure/config/text_style.dart';
+import 'package:attendance_and_departure/core/widget/info_wrap_widget.dart';
 import 'package:attendance_and_departure/features/profil/presentation/widget/item_dateail_widget.dart';
 import 'package:attendance_and_departure/features/profil/presentation/widget/text_title_widget.dart';
 import 'package:attendance_and_departure/features/report/presentation/provider/report_provider.dart';
@@ -35,7 +36,8 @@ class DiscouuntAndAdditionWidget extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.4), // Shadow color
                   ),
                 ]),
-              )
+              ),
+            
             ],
           ),
           SizedBox(height: 1.h),
@@ -60,7 +62,7 @@ class DiscouuntAndAdditionWidget extends StatelessWidget {
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title:"إضافات الوقت الإضافي",
+                          title: "إضافات الوقت الإضافي",
                           corlor: [Colors.white, Colors.white],
                           text: reportProvider.reportEntity!.additionalSalaryForExtraTime.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
@@ -71,11 +73,46 @@ class DiscouuntAndAdditionWidget extends StatelessWidget {
                           text: reportProvider.reportEntity!.currentSalary.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
+                          
                       ],
                     ),
                   ),
                 )
-              : SizedBox.shrink()
+              : SizedBox.shrink(),
+              // Wrap(
+              //   spacing: 2.w,
+              //   runSpacing: 2.w,
+              //   children: [
+              //     InfoWrapWidget(
+              //       bordercolor: Colors.blue,
+              //       title: 'الراتب الاساسي',
+              //       subtitle: reportProvider.reportEntity!.mainSalary.toString(),
+              //       titleColor: Colors.grey,
+              //       subtitleColor: Colors.black,
+              //     ),
+              //      InfoWrapWidget(
+              //       bordercolor: Colors.blue,
+              //       title: 'الراتب الاساسي',
+              //       subtitle: reportProvider.reportEntity!.mainSalary.toString(),
+              //       titleColor: Colors.grey,
+              //       subtitleColor: Colors.black,
+              //     ),
+              //      InfoWrapWidget(
+              //       bordercolor: Colors.blue,
+              //       title: 'الراتب الاساسي',
+              //       subtitle: reportProvider.reportEntity!.mainSalary.toString(),
+              //       titleColor: Colors.grey,
+              //       subtitleColor: Colors.black,
+              //     ),
+              //      InfoWrapWidget(
+              //       bordercolor: Colors.blue,
+              //       title: 'الراتب الاساسي',
+              //       subtitle: reportProvider.reportEntity!.mainSalary.toString(),
+              //       titleColor: Colors.grey,
+              //       subtitleColor: Colors.black,
+              //     )
+              //   ],
+              // )
         ],
       ),
     );
