@@ -19,8 +19,10 @@ class WorkTimeWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Icon(Icons.timelapse,size: 7.w, color: Colors.orangeAccent,),
+              SizedBox(width: 2.w,),
               TextTitleWidget(
-                text: 'تفاصيل الوقت والعمل',
+                text: 'إحصائيات العمل',
                 textStyle: TextStyleClass.semiBoldStyle(shadow: [
                   Shadow(
                     offset: Offset(4.0, 4.0), // Position of the shadow
@@ -47,18 +49,6 @@ class WorkTimeWidget extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ItemDateailWidget(
-                          title: 'وقت الشيفت',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.shift,
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'مدة الشيفت',
-                          corlor: [Colors.white, Colors.white],
-                          text: convertToHoursAndMinutes(reportProvider.reportEntity!.shiftMinutes),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
                           title: 'ايام الحضور',
                           corlor: [Colors.white, Colors.white],
                           text: reportProvider.reportEntity!.attendDays.toString() + ' يوماً',
@@ -73,33 +63,19 @@ class WorkTimeWidget extends StatelessWidget {
                         ItemDateailWidget(
                           title: 'وقت التاخير',
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.lateMinutes == 0
-                              ? 'منتظر'
-                              : convertToHoursAndMinutes(reportProvider.reportEntity!.lateMinutes),
+                          text: convertToHoursAndMinutes(reportProvider.reportEntity!.lateMinutes),
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title: 'الوقت الاضافي',
+                          title: 'مدة العمل الإضافي',
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.overTimeMinutes == 0
-                              ? 'منتظر'
-                              : convertToHoursAndMinutes(reportProvider.reportEntity!.overTimeMinutes),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'مدة العمل الإضافي العامل',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.extraTimeWorkedTimeSpan == null
-                              ? 'منتظر'
-                              : convertToHoursAndMinutesStringWork(reportProvider.reportEntity!.extraTimeWorkedTimeSpan!),
+                          text: convertToHoursAndMinutesStringWork(reportProvider.reportEntity!.overTime),
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
                           title: 'مدة الوقت غير العامل',
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.notWorkingTimeSpan == null
-                              ? 'منتظر'
-                              : convertToHoursAndMinutesStringWork(reportProvider.reportEntity!.notWorkingTimeSpan!),
+                          text: convertToHoursAndMinutesStringWork(reportProvider.reportEntity!.notWorkingTime),
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                       ],

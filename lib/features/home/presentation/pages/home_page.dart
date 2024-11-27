@@ -1,3 +1,5 @@
+import 'package:attendance_and_departure/config/text_style.dart';
+import 'package:attendance_and_departure/features/profil/presentation/widget/text_title_widget.dart';
 import 'package:attendance_and_departure/features/report/presentation/provider/report_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          toolbarHeight: 5.h,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25.w)),
+          ),
+          backgroundColor: const Color.fromARGB(255, 53, 52, 52),
+          leading: SizedBox.shrink(),
+          title: TextTitleWidget(
+            text: 'الرئيسية',
+            color: [Colors.white, Colors.white],
+            textStyle: TextStyleClass.headBoldStyle(shadow: [
+              Shadow(
+                offset: Offset(4.0, 4.0), // Position of the shadow
+                blurRadius: 6.0, // How much the shadow is blurred
+                color: Colors.white.withOpacity(0.4), // Shadow color
+              ),
+            ]),
+          )),
       backgroundColor: const Color(0xFFF6F7F9),
       body: SizedBox(
         height: 100.h,

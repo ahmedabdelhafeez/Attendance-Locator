@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class WorkerDetailsWidget extends StatelessWidget {
-  const WorkerDetailsWidget({super.key});
+class DiscouuntAndAdditionWidget extends StatelessWidget {
+  const DiscouuntAndAdditionWidget({super.key});
   @override
   Widget build(BuildContext context) {
     ReportProvider reportProvider = Provider.of<ReportProvider>(context);
@@ -18,10 +18,16 @@ class WorkerDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.person,size: 7.w,color: Colors.orangeAccent,),
-              SizedBox(width: 2.w,),
+              Icon(
+                Icons.calculate_sharp,
+                size: 7.w,
+                color: Colors.orangeAccent,
+              ),
+              SizedBox(
+                width: 2.w,
+              ),
               TextTitleWidget(
-                text: 'المعلومات الشخصية',
+                text: 'الخصومات والإضافات',
                 textStyle: TextStyleClass.semiBoldStyle(shadow: [
                   Shadow(
                     offset: Offset(4.0, 4.0), // Position of the shadow
@@ -48,29 +54,23 @@ class WorkerDetailsWidget extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ItemDateailWidget(
-                          title: 'الرقم القومي',
+                          title: 'الخصم بسبب التأخير',
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.nationalId,
+                          text: reportProvider.reportEntity!.deductionForLateMinutes.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title: 'الوظيفة',
+                          title:"إضافات الوقت الإضافي",
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.job,
+                          text: reportProvider.reportEntity!.additionalSalaryForExtraTime.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title: 'نوع الشيفت',
+                          title: 'الراتب النهائي',
                           corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.shift,
+                          text: reportProvider.reportEntity!.currentSalary.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
-                        // ItemDateailWidget(
-                        //   title: 'قسم العمل',
-                        //   corlor: [Colors.white, Colors.white],
-                        //   text: reportProvider.reportEntity!.department,
-                        //   textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        // ),
                       ],
                     ),
                   ),

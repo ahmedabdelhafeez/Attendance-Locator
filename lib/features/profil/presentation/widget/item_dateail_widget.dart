@@ -12,12 +12,14 @@ class ItemDateailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(2.w),
+      padding: EdgeInsets.all(1.w),
       decoration: BoxDecoration(
         //border: Border(bottom: BorderSide(color: Colors.white))
         ),
       child: Row(
         children: [
+          Icon(Icons.circle,size: 10,color: Colors.white,),
+          SizedBox(width: 1.w),
           Text(title, style: TextStyleClass.normalBoldStyle(color: Colors.white)),
           // Spacer(),
           Expanded(

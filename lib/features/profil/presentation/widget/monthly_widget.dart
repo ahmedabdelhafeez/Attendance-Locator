@@ -17,66 +17,69 @@ class MonthlyWidget extends StatelessWidget {
       padding: EdgeInsets.all(4.w),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 1.h),
+          SizedBox(height: 2.h),
           reportProvider.reportEntity != null
-              ? Material(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.w)),
-                  elevation: 2.w,
-                  child: Container(
-                    padding: EdgeInsets.all(4.w),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.w),
-                        gradient: LinearGradient(begin: AlignmentDirectional.centerStart, end: AlignmentDirectional.bottomEnd, colors: [
-                          Colors.orange,
-                          Colors.black,
-                        ])),
-                    child: Column(
-                      children: <Widget>[
-                        ItemDateailWidget(
-                          title: 'التاريخ',
-                          corlor: [Colors.white, Colors.white],
-                          text: attendancesDetails.date.toString(),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'اليوم',
-                          corlor: [Colors.white, Colors.white],
-                          text: attendancesDetails.day.toString(),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'وقت تسجيل الحضور',
-                          corlor: [Colors.white, Colors.white],
-                          text: toDisplayFormat(attendancesDetails.checkInTime),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'وقت تسجيل الامصراف',
-                          corlor: [Colors.white, Colors.white],
-                          text:attendancesDetails.checkOutTime!=null?toDisplayFormat(attendancesDetails.checkOutTime!):'منتظر',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'عدد ساعات العمل الكلية',
-                          corlor: [Colors.white, Colors.white],
-                          text: attendancesDetails.totalWorkHours,
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'وقت التاخير',
-                          corlor: [Colors.white, Colors.white],
-                          text: convertToHoursAndMinutes(attendancesDetails.lateMinutes),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'وقت العمل الاضافي',
-                          corlor: [Colors.white, Colors.white],
-                          text: convertToHoursAndMinutes(attendancesDetails.overTimeMinutes),
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                      ],
+              ? Column(
+                  children: [
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+                      Icon(Icons.date_range_sharp,size: 5.w,),
+                      SizedBox(width: 1.w,),
+                      Text(
+                        'اليوم : ${attendancesDetails.day}  ${attendancesDetails.date}',
+                        style: TextStyleClass.normalBoldStyle(color: Colors.black),
+                      )
+                    ]),
+                    SizedBox(
+                      height: 2.h,
                     ),
-                  ),
+                    Material(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.w)),
+                      elevation: 2.w,
+                      child: Container(
+                        padding: EdgeInsets.all(4.w),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.w),
+                            gradient: LinearGradient(begin: AlignmentDirectional.centerStart, end: AlignmentDirectional.bottomEnd, colors: [
+                              Colors.orange,
+                              Colors.black,
+                            ])),
+                        child: Column(
+                          children: <Widget>[
+                            ItemDateailWidget(
+                              title: 'وقت تسجيل الحضور',
+                              corlor: [Colors.white, Colors.white],
+                              text: toDisplayFormat(attendancesDetails.checkInTime),
+                              textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                            ),
+                            ItemDateailWidget(
+                              title: 'وقت تسجيل الانصراف',
+                              corlor: [Colors.white, Colors.white],
+                              text: attendancesDetails.checkOutTime != null ? toDisplayFormat(attendancesDetails.checkOutTime!) : 'منتظر',
+                              textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                            ),
+                            ItemDateailWidget(
+                              title: 'وقت العمل',
+                              corlor: [Colors.white, Colors.white],
+                              text: attendancesDetails.totalWorkHours,
+                              textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                            ),
+                            ItemDateailWidget(
+                              title: 'وقت التاخير',
+                              corlor: [Colors.white, Colors.white],
+                              text: convertToHoursAndMinutes(attendancesDetails.lateMinutes),
+                              textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                            ),
+                            ItemDateailWidget(
+                              title: 'وقت العمل الاضافي',
+                              corlor: [Colors.white, Colors.white],
+                              text: convertToHoursAndMinutes(attendancesDetails.overTimeMinutes),
+                              textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               : SizedBox.shrink()
         ],

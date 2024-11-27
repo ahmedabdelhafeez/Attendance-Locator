@@ -18,8 +18,10 @@ class SalaryWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+               Icon(Icons.money,size: 7.w,color: Colors.orangeAccent,),
+              SizedBox(width: 2.w,),
               TextTitleWidget(
-                text: 'التفاصيل المالية',
+                text: 'معلومات الراتب',
                 textStyle: TextStyleClass.semiBoldStyle(shadow: [
                   Shadow(
                     offset: Offset(4.0, 4.0), // Position of the shadow
@@ -46,65 +48,30 @@ class SalaryWidget extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         ItemDateailWidget(
-                          title: 'القيمة المالية لليوم',
+                          title: 'الراتب الأساسي',
+                          corlor: [Colors.white, Colors.white],
+                          text: reportProvider.reportEntity!.mainSalary.toString() + ' جنيهاً',
+                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+                        ),
+                        ItemDateailWidget(
+                          title:  'الراتب اليومي',
                           corlor: [Colors.white, Colors.white],
                           text: reportProvider.reportEntity!.dailySalary.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title: 'القيمة المالية للساعة',
+                          title: 'أجر الساعة',
                           corlor: [Colors.white, Colors.white],
                           text: reportProvider.reportEntity!.hourSalary.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
                         ItemDateailWidget(
-                          title: 'القيمة المالية للدقيقة',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.minuteSalary.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'الخصم بسبب دقائق التأخير',
+                          title: 'أجر الدقيقة',
                           corlor: [Colors.white, Colors.white],
                           text: reportProvider.reportEntity!.deductionForLateMinutes.toString() + ' جنيهاً',
                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
                         ),
-                        ItemDateailWidget(
-                          title: 'راتب إضافي عن الوقت الإضافي',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.additionalSalaryForExtraTime.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'الراتب بعد خصم ساعات التأخير',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.salaryAfterLateHours.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'الراتب بعد ساعات العمل الإضافية',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.overTimeMinutes.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'مدة العمل الإضافي العامل',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.salaryAfterExtraTimeWorked.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'الراتب المتبقي',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.remainSalary.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
-                        ItemDateailWidget(
-                          title: 'الراتب الحالي',
-                          corlor: [Colors.white, Colors.white],
-                          text: reportProvider.reportEntity!.currentSalary.toString() + ' جنيهاً',
-                          textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
-                        ),
+                       
                       ],
                     ),
                   ),
@@ -115,3 +82,39 @@ class SalaryWidget extends StatelessWidget {
     );
   }
 }
+//  ItemDateailWidget(
+//                           title: 'راتب إضافي عن الوقت الإضافي',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.additionalSalaryForExtraTime.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),
+//                         ItemDateailWidget(
+//                           title: 'الراتب بعد خصم ساعات التأخير',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.salaryAfterLateHours.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),
+//                         ItemDateailWidget(
+//                           title: 'الراتب بعد ساعات العمل الإضافية',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.overTimeMinutes.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),
+//                         ItemDateailWidget(
+//                           title: 'مدة العمل الإضافي العامل',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.salaryAfterExtraTimeWorked.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),
+//                         ItemDateailWidget(
+//                           title: 'الراتب المتبقي',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.remainSalary.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),
+//                         ItemDateailWidget(
+//                           title: 'الراتب الحالي',
+//                           corlor: [Colors.white, Colors.white],
+//                           text: reportProvider.reportEntity!.currentSalary.toString() + ' جنيهاً',
+//                           textStyle: TextStyleClass.normalBoldStyle(color: Colors.white),
+//                         ),

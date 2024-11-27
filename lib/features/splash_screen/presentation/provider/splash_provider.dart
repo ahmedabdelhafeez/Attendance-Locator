@@ -47,13 +47,11 @@ class SplashProvider extends ChangeNotifier {
   void startApp() async {
     await delay(800);
     Provider.of<AuthProvider>(Constants.globalContext(), listen: false).getUniqueId();
-    String? token =CashMemmory.getData(key: 'userToken');
-
+    String? token = CashMemmory.getData(key: 'userToken');
     print(token);
     print(' userI ---------------------- > ' + CashMemmory.getData(key: 'UserId').toString());
     if (token == null) {
-      //Provider.of<AuthProvider>(Constants.globalContext(), listen: false).goToRegisterPage();
-      Provider.of<AuthProvider>(Constants.globalContext(), listen: false).goToLoginPage();
+      Provider.of<AuthProvider>(Constants.globalContext(), listen: false).goToRegisterPage();
     } else {
       ApiHandle.getInstance.updateHeader(token);
       Provider.of<AttendanceProvider>(Constants.globalContext(), listen: false).getEmployeeHome(CashMemmory.getData(key: 'UserId'));

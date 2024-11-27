@@ -11,8 +11,8 @@ class ReportEntity {
   final int lateMinutes;
   final int overTimeMinutes;
   final List<AttendancesDetails> attendancesDetails;
-  String? notWorkingTimeSpan;
-  String? extraTimeWorkedTimeSpan;
+  final String notWorkingTime;
+  final String overTime;
   final dynamic dailySalary;
   final dynamic hourSalary;
   final dynamic minuteSalary;
@@ -35,8 +35,8 @@ class ReportEntity {
     required this.lateMinutes,
     required this.overTimeMinutes,
     required this.attendancesDetails,
-    this.notWorkingTimeSpan,
-    this.extraTimeWorkedTimeSpan,
+    required this.notWorkingTime,
+    required this.overTime,
     required this.dailySalary,
     required this.hourSalary,
     required this.minuteSalary,

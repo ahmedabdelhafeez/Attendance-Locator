@@ -2,7 +2,7 @@ String convertToHoursAndMinutes(int totalMinutes) {
   int hours = totalMinutes ~/ 60; // حساب عدد الساعات
   int minutes = totalMinutes % 60;
   String show = hours > 0 ? 'ساعة' : 'دقيقة'; // حساب عدد الدقائق المتبقية
-  return "$hours:${minutes.toString().padLeft(2, '0')}" + " " + show; // تنسيق النتيجة
+  return "$hours:${minutes.toString().padLeft(2, '0')}"; // تنسيق النتيجة
 }
 
 String convertToHoursAndMinutesString(String inputs) {
@@ -22,7 +22,7 @@ String convertToHoursAndMinutesString(String inputs) {
     result = '0 ساعة';
     print("Negative time: -${totalHours}h ${minutes}m");
   } else {
-    result = "${hours == 0 ? 12 : hours}:${minutes} ساعة ";
+    result = "${hours == 0 ? 12 : hours}:${minutes}";
   } // حساب عدد الدقائق
 
   return result; // تنسيق النتيجة
@@ -32,7 +32,7 @@ String convertToHoursAndMinutesStringWork(String inputs) {
   List<String> parts = inputs.split(':'); // حساب عدد الساعات
   int hours = int.parse(parts[0]); // Hours part
   int minutes = int.parse(parts[1]); // حساب عدد الدقائق
-  String result = "$hours:$minutes" + " ساعة";
+  String result = "$hours:$minutes";
   return result; // تنسيق النتيجة
 }
 
